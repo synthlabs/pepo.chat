@@ -5,5 +5,5 @@
   <div class="flex">
     <img class="h-32" alt="The project logo" src="/pepo.png" />
   </div>
-  <div class="flex">pepo</div>
+  <div class="flex">pepo &trade;</div>
 </div>
