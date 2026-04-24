@@ -1,0 +1,155 @@
+/* ============================================================
+   Synth Labs Design System — Colors & Type
+   Dark-first: theme defaults to .dark, with optional light
+   token overrides for surfaces that want to invert.
+   ============================================================ */
+
+:root {
+  --radius: 0.3rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-full: 9999px;
+
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-popover: 0 8px 24px -6px rgb(0 0 0 / 0.5);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+               sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+
+  --fs-xs:  0.75rem;
+  --fs-sm:  0.875rem;
+  --fs-base: 1rem;
+  --fs-lg:  1.125rem;
+  --fs-xl:  1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-4xl: 2.25rem;
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold: 600;
+  --fw-bold:    700;
+
+  --lh-tight:   1.2;
+  --lh-snug:    1.35;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.625;
+
+  --background: 0 0% 100%;
+  --foreground: 224 71.4% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71.4% 4.1%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71.4% 4.1%;
+  --primary: 262.1 83.3% 57.8%;
+  --primary-foreground: 210 20% 98%;
+  --secondary: 220 14.3% 95.9%;
+  --secondary-foreground: 220.9 39.3% 11%;
+  --muted: 217.9 10.6% 64.9%;
+  --muted-foreground: 220 8.9% 46.1%;
+  --accent: 220 14.3% 95.9%;
+  --accent-foreground: 220.9 39.3% 11%;
+  --destructive: 0 72.22% 50.59%;
+  --destructive-foreground: 210 20% 98%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 262.1 83.3% 57.8%;
+
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 262.1 83.3% 57.8%;
+
+  --content-primary: 220 14.3% 95.9%;
+  --content-secondary: 217.9 10.6% 64.9%;
+}
+
+.dark, :root.dark, html.dark {
+  --background:         221.1 71.4% 5.5%;
+  --foreground:         240 7% 94%;
+  --card:               221.1 71.4% 5.5%;
+  --card-foreground:    240 7% 94%;
+  --popover:            221.1 71.4% 5.5%;
+  --popover-foreground: 240 7% 94%;
+
+  --primary:            263.4 70% 50.4%;
+  --primary-foreground: 240 7% 94%;
+
+  --secondary:          215 27.9% 16.9%;
+  --secondary-foreground: 240 7% 94%;
+  --muted:              215 27.9% 16.9%;
+  --muted-foreground:   217.9 10.6% 64.9%;
+  --accent:             215 27.9% 21%;
+  --accent-foreground:  240 7% 94%;
+
+  --destructive:        0 62.8% 30.6%;
+  --destructive-foreground: 240 7% 94%;
+
+  --border:             215 27.9% 16.9%;
+  --input:              215 27.9% 16.9%;
+  --ring:               263.4 70% 50.4%;
+
+  --sidebar-background:            221.1 32.2% 11.57%;
+  --sidebar-foreground:            240 4.8% 95.9%;
+  --sidebar-primary:               263.4 69.96% 50.39%;
+  --sidebar-primary-foreground:    0 0% 100%;
+  --sidebar-accent:                221.1 31.65% 9.1%;
+  --sidebar-accent-foreground:     240 4.8% 95.9%;
+  --sidebar-border:                240 3.7% 15.9%;
+  --sidebar-ring:                  240 4.9% 83.9%;
+
+  --content-primary:   222 49% 7%;
+  --content-secondary: 222 49% 10%;
+}
+
+:root.dark, .dark {
+  --c-bg:            hsl(var(--background));
+  --c-fg:            hsl(var(--foreground));
+  --c-fg-muted:      hsl(var(--muted-foreground));
+  --c-border:        hsl(var(--border));
+  --c-card:          hsl(var(--card));
+  --c-sidebar:       hsl(var(--sidebar-background));
+  --c-sidebar-fg:    hsl(var(--sidebar-foreground));
+  --c-sidebar-accent: hsl(var(--sidebar-accent));
+  --c-primary:       hsl(var(--primary));
+  --c-primary-fg:    hsl(var(--primary-foreground));
+  --c-accent:        hsl(var(--accent));
+  --c-destructive:   hsl(var(--destructive));
+  --c-ring:          hsl(var(--ring));
+
+  --c-pepo:            263 75% 65%;
+  --c-pepo-hex:        hsl(var(--c-pepo));
+  --c-pepo-soft:       hsl(263 75% 65% / 0.18);
+  --c-pepo-ring:       hsl(263 75% 75%);
+}
+
+html { font-family: var(--font-sans); color: var(--c-fg); }
+body { font-size: var(--fs-sm); line-height: var(--lh-normal); }
+
+h1 { font-size: var(--fs-3xl); font-weight: var(--fw-semibold); line-height: var(--lh-tight); letter-spacing: -0.01em; }
+h2 { font-size: var(--fs-2xl); font-weight: var(--fw-semibold); line-height: var(--lh-tight); }
+h3 { font-size: var(--fs-lg); font-weight: var(--fw-medium); line-height: var(--lh-snug); }
+h4 { font-size: var(--fs-base); font-weight: var(--fw-semibold); line-height: var(--lh-snug); }
