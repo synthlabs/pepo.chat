@@ -6,13 +6,16 @@
 		"dev": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview --host",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && i18n-lint ./messages",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
+		"@inlang/paraglide-js": "^2.16.1",
+		"@synthlabs/i18n": "link:../utils/js/i18n",
 		"@sveltejs/adapter-static": "^3.0.6",
 		"@sveltejs/kit": "^2.8.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/node": "^25.6.0",
 		"lucide-svelte": "^0.454.0",
 		"svelte": "^5.1.9",
 		"svelte-check": "^4.0.5",

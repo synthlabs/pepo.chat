@@ -11,6 +11,7 @@
 	} from '$lib/platform';
 	import PlatformGlyph from '$lib/glyphs/PlatformGlyph.svelte';
 	import GithubGlyph from '$lib/glyphs/GithubGlyph.svelte';
+	import { m as msgs } from '$lib/paraglide/messages';
 
 	let platformId: PlatformId = $state('macos');
 	let version: string | null = $state(null);
@@ -55,15 +56,15 @@
 		<a class="primary" href={hrefFor(current, version)}>
 			<PlatformGlyph icon={current.icon} size={18} />
 			<span style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15;">
-				<span>Download for {current.short}</span>
+				<span>{msgs.dl_download_for()} {current.short}</span>
 				<span style="font-size: 11px; opacity: 0.75; font-weight: 400;">
-					{version ? `v${version} · ${current.ext}` : `latest release · ${current.ext}`}
+					{version ? `v${version} · ${current.ext}` : `${msgs.dl_latest_release()} · ${current.ext}`}
 				</span>
 			</span>
 		</a>
 		<button
 			class="caret"
-			aria-label="Other platforms"
+			aria-label={msgs.dl_other_platforms()}
 			onclick={() => (menuOpen = !menuOpen)}
 		>
 			<ChevronDown size={16} strokeWidth={1.75} />
@@ -85,7 +86,7 @@
 			<a href={RELEASES_URL}>
 				<button>
 					<GithubGlyph size={14} />
-					<span>All releases</span>
+					<span>{msgs.dl_all_releases()}</span>
 					<span class="k-file">GitHub</span>
 				</button>
 			</a>

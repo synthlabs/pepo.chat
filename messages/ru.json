@@ -1,0 +1,61 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+
+	"meta_title": "pepo — новый способ общаться в чате",
+	"meta_description": "Чистый и стабильный клиент чата для Twitch — со смайлами 7TV, BTTV и FFZ, списком подписок и композером, который не мешает. Кроссплатформенное десктоп-приложение, открытый исходный код.",
+
+	"nav_features": "Возможности",
+	"nav_install": "Установка",
+	"nav_github": "GitHub",
+	"early_access": "ранний доступ",
+
+	"hero_status": "pepo v0.2.19 · кроссплатформенно, открытый код",
+	"hero_headline_part1": "Новый способ",
+	"hero_headline_part2": "общаться в чате.",
+	"hero_subtitle": "Чистый и стабильный клиент чата для Twitch — со смайлами 7TV, BTTV и FFZ, списком подписок с живым статусом и композером, который не мешает. Кроссплатформенное десктоп-приложение, открытый код — и всё ещё в самом начале пути.",
+	"view_source": "Исходный код",
+	"hero_chip_updates": "Автообновление на месте",
+	"hero_chip_stack": "Tauri + Svelte",
+	"hero_chip_unaffiliated": "Не связан с Twitch",
+
+	"features_heading": "Что внутри",
+	"features_hint": "Кликните по строке для превью",
+	"tab_emotes_label": "Сторонние смайлы",
+	"tab_emotes_blurb": "7TV, BTTV и FFZ — статичные и анимированные, прямо в чате.",
+	"tab_following_label": "Подписки",
+	"tab_following_blurb": "Ваш список подписок с живым статусом и числом зрителей.",
+	"tab_badges_label": "Значки и цвета",
+	"tab_badges_blurb": "Значки подписчиков, модераторов, VIP, партнёров и стримеров. Свои цвета имён.",
+	"tab_composer_label": "Композер и пикер",
+	"tab_composer_blurb": "Отправляйте сообщения от своего имени Twitch. Пикер смайлов из всех ваших наборов.",
+
+	"status_sending": "Отправка сообщений",
+	"status_badges": "Значки, смайлы, цветные имена",
+	"status_thirdparty": "Сторонние смайлы (7TV, BTTV, FFZ)",
+	"status_following": "Сайдбар подписок и живой статус",
+	"status_autoupdater": "Автообновление",
+	"status_history": "История сообщений",
+	"status_moderation": "Инструменты модерации",
+	"status_youtube": "Поддержка YouTube",
+
+	"install_heading": "Установка",
+	"install_intro": "Скачайте последний релиз для вашей платформы. Pepo уведомит о выходе обновлений и обновится сам.",
+	"install_release_aria": "Перейти на страницу релиза",
+	"build_heading": "Или соберите из исходников",
+	"build_intro": "Требуется Rust, Node.js и pnpm.",
+	"build_comment": "собранный бинарник попадёт в src-tauri/target/release/bundle/",
+
+	"foot_attribution": "pepo™ · проект Synth Labs",
+	"foot_github": "GitHub",
+	"foot_releases": "Релизы",
+	"foot_issues": "Задачи",
+	"foot_synthlabs": "Synth Labs",
+
+	"dl_download_for": "Скачать для",
+	"dl_latest_release": "последний релиз",
+	"dl_other_platforms": "Другие платформы",
+	"dl_all_releases": "Все релизы",
+
+	"locale_label_en": "English",
+	"locale_label_ru": "Русский"
+}

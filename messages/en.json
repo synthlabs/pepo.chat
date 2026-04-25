@@ -1,0 +1,61 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+
+	"meta_title": "pepo — a new way to chat",
+	"meta_description": "A clean, consistent chat client for Twitch — with 7TV, BTTV, and FFZ emotes, followed channels, and a composer that stays out of the way. Cross-platform desktop, open source.",
+
+	"nav_features": "Features",
+	"nav_install": "Install",
+	"nav_github": "GitHub",
+	"early_access": "early access",
+
+	"hero_status": "pepo v0.2.19 · cross-platform, open source",
+	"hero_headline_part1": "A new way",
+	"hero_headline_part2": "to chat.",
+	"hero_subtitle": "A clean, consistent chat client for Twitch — with 7TV, BTTV, and FFZ emotes, followed channels with live status, and a composer that stays out of the way. Cross-platform desktop, open source, and still very early.",
+	"view_source": "View source",
+	"hero_chip_updates": "Auto-updates in-place",
+	"hero_chip_stack": "Tauri + Svelte",
+	"hero_chip_unaffiliated": "Not affiliated with Twitch",
+
+	"features_heading": "What's in it",
+	"features_hint": "Click a row to preview",
+	"tab_emotes_label": "Third-party emotes",
+	"tab_emotes_blurb": "7TV, BTTV, and FFZ — static and animated, inline.",
+	"tab_following_label": "Followed channels",
+	"tab_following_blurb": "Your follow list with live status and viewer counts.",
+	"tab_badges_label": "Badges & color",
+	"tab_badges_blurb": "Subscriber, mod, VIP, partner, and broadcaster badges. Custom username colors.",
+	"tab_composer_label": "Composer & picker",
+	"tab_composer_blurb": "Send as your Twitch identity. Emote picker across every set you own.",
+
+	"status_sending": "Sending messages",
+	"status_badges": "Badges, emotes, colored usernames",
+	"status_thirdparty": "Third-party emotes (7TV, BTTV, FFZ)",
+	"status_following": "Followed channels sidebar + live status",
+	"status_autoupdater": "Auto-updater",
+	"status_history": "Message history",
+	"status_moderation": "Moderation tools",
+	"status_youtube": "YouTube support",
+
+	"install_heading": "Install",
+	"install_intro": "Download the latest release for your platform. Pepo will notify you when updates are available and update itself in-place.",
+	"install_release_aria": "Go to release page",
+	"build_heading": "Or build from source",
+	"build_intro": "Requires Rust, Node.js, and pnpm.",
+	"build_comment": "built binary lands in src-tauri/target/release/bundle/",
+
+	"foot_attribution": "pepo™ · a Synth Labs project",
+	"foot_github": "GitHub",
+	"foot_releases": "Releases",
+	"foot_issues": "Issues",
+	"foot_synthlabs": "Synth Labs",
+
+	"dl_download_for": "Download for",
+	"dl_latest_release": "latest release",
+	"dl_other_platforms": "Other platforms",
+	"dl_all_releases": "All releases",
+
+	"locale_label_en": "English",
+	"locale_label_ru": "Русский"
+}
