@@ -40,86 +40,86 @@
 	<link rel="alternate" hreflang="x-default" href="https://pepo.chat/" />
 </svelte:head>
 
-<div style="min-height: 100vh; display: flex; flex-direction: column;">
-	<header style="display: flex; align-items: center; padding: 18px 32px; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box;">
-		<div style="display: flex; align-items: center; gap: 10px;">
-			<img src="/pepo-flat.png" alt="" style="height: 28px; width: 28px;" />
-			<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.01em;">pepo</span>
-			<span style="font-size: 11px; padding: 2px 6px; margin-left: 4px; border-radius: 999px; background: hsl(var(--accent)); color: hsl(var(--muted-foreground)); border: 1px solid hsl(var(--border));">
+<div class="landing-page" style="min-height: 100vh; display: flex; flex-direction: column;">
+	<header class="site-header" style="display: flex; align-items: center; padding: 18px 32px; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box;">
+		<div class="brand-lockup" style="display: flex; align-items: center; gap: 10px;">
+			<img class="brand-logo" src="/pepo-flat.png" alt="" style="height: 28px; width: 28px;" />
+			<span class="brand-name" style="font-size: 16px; font-weight: 600; letter-spacing: 0;">pepo</span>
+			<span class="brand-badge" style="font-size: 11px; padding: 2px 6px; margin-left: 4px; border-radius: 999px; background: hsl(var(--accent)); color: hsl(var(--muted-foreground)); border: 1px solid hsl(var(--border));">
 				{msgs.early_access()}
 			</span>
 		</div>
-		<nav style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
-			<a class="btn-ghost" href="#features" style="padding: 6px 10px;">{msgs.nav_features()}</a>
-			<a class="btn-ghost" href="#install" style="padding: 6px 10px;">{msgs.nav_install()}</a>
-			<a class="btn-ghost" href="https://github.com/synthlabs/pepo" style="padding: 6px 10px;">
+		<nav class="site-nav" style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
+			<a class="btn-ghost nav-link" href="#features" style="padding: 6px 10px;">{msgs.nav_features()}</a>
+			<a class="btn-ghost nav-link" href="#install" style="padding: 6px 10px;">{msgs.nav_install()}</a>
+			<a class="btn-ghost nav-link" href="https://github.com/synthlabs/pepo" style="padding: 6px 10px;">
 				<GithubGlyph size={14} /> {msgs.nav_github()}
 			</a>
 			<LanguageSwitcher />
 		</nav>
 	</header>
 
-	<section style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 32px 32px 64px; box-sizing: border-box;">
+	<section class="landing-section hero-section" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 32px 32px 64px; box-sizing: border-box;">
 		<div class="hero-grid" style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center;">
-			<div>
-				<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 18px;">
+			<div class="hero-copy">
+				<div class="hero-status" style="display: flex; align-items: center; gap: 8px; margin-bottom: 18px;">
 					<span class="live-dot" style="width: 8px; height: 8px; border-radius: 999px; background: hsl(var(--primary));"></span>
-					<span style="font-size: 12px; color: hsl(var(--muted-foreground)); letter-spacing: 0.02em;">
+					<span style="font-size: 12px; color: hsl(var(--muted-foreground)); letter-spacing: 0;">
 						{msgs.hero_status()}
 					</span>
 				</div>
-				<h1 style="font-size: clamp(40px, 5vw, 64px); font-weight: 600; line-height: 1.04; letter-spacing: -0.025em; margin: 0;">
+				<h1 class="hero-title" style="font-weight: 600; line-height: 1.04; letter-spacing: 0; margin: 0;">
 					{msgs.hero_headline_part1()}<br />{msgs.hero_headline_part2()}
 				</h1>
-				<p style="margin-top: 18px; font-size: 17px; line-height: 1.55; color: hsl(var(--muted-foreground)); max-width: 480px; text-wrap: pretty;">
+				<p class="hero-subtitle" style="margin-top: 18px; font-size: 17px; line-height: 1.55; color: hsl(var(--muted-foreground)); max-width: 480px; text-wrap: pretty;">
 					{msgs.hero_subtitle()}
 				</p>
 
-				<div style="display: flex; gap: 12px; align-items: center; margin-top: 28px; flex-wrap: wrap;">
+				<div class="hero-actions" style="display: flex; gap: 12px; align-items: center; margin-top: 28px; flex-wrap: wrap;">
 					<DownloadButton />
-					<a class="btn-ghost" href="https://github.com/synthlabs/pepo">
+					<a class="btn-ghost hero-source" href="https://github.com/synthlabs/pepo">
 						<GithubGlyph size={16} /> {msgs.view_source()}
 					</a>
 				</div>
 
-				<div style="margin-top: 20px; font-size: 12px; color: hsl(var(--muted-foreground)); display: flex; gap: 16px; flex-wrap: wrap;">
-					<span style="display: inline-flex; align-items: center; gap: 6px;">
+				<div class="hero-chips" style="margin-top: 20px; font-size: 12px; color: hsl(var(--muted-foreground)); display: flex; gap: 16px; flex-wrap: wrap;">
+					<span class="hero-chip" style="display: inline-flex; align-items: center; gap: 6px;">
 						<ShieldCheck size={12} strokeWidth={1.75} /> {msgs.hero_chip_updates()}
 					</span>
-					<span style="display: inline-flex; align-items: center; gap: 6px;">
+					<span class="hero-chip" style="display: inline-flex; align-items: center; gap: 6px;">
 						<Code size={12} strokeWidth={1.75} /> {msgs.hero_chip_stack()}
 					</span>
-					<span style="display: inline-flex; align-items: center; gap: 6px;">
+					<span class="hero-chip" style="display: inline-flex; align-items: center; gap: 6px;">
 						<Heart size={12} strokeWidth={1.75} /> {msgs.hero_chip_unaffiliated()}
 					</span>
 				</div>
 			</div>
 
-			<div style="position: relative;">
+			<div class="hero-preview" style="position: relative;">
 				<img
 					src="/pepo-logo.png"
 					alt="pepo mascot"
-					class="duck-mark"
-					style="position: absolute; top: -40px; right: -10px; width: 140px; height: auto; transform: rotate(8deg); z-index: 3; pointer-events: none;"
+					class="duck-mark hero-mascot"
 				/>
-				<div class="shell" style="border: none; box-shadow: var(--shadow-lg);">
-					<img src="/pepo-chat-demo.gif" alt="Pepo chat demo" style="width: 100%; display: block;" />
+				<div class="shell hero-shell" style="border: none; box-shadow: var(--shadow-lg);">
+					<img class="hero-demo" src="/pepo-chat-demo.gif" alt="Pepo chat demo" style="width: 100%; display: block;" />
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section id="features" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 48px 32px; box-sizing: border-box;">
-		<div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-			<h2 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.02em;">{msgs.features_heading()}</h2>
+	<section class="landing-section features-section" id="features" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 48px 32px; box-sizing: border-box;">
+		<div class="section-head" style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+			<h2 class="section-title" style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 0;">{msgs.features_heading()}</h2>
 			<span style="font-size: 13px; color: hsl(var(--muted-foreground));">{msgs.features_hint()}</span>
 		</div>
 
 		<div class="features-grid" style="display: grid; grid-template-columns: 360px 1fr; gap: 32px; align-items: start;">
-			<div role="tablist" aria-label="Feature preview" style="display: flex; flex-direction: column; gap: 4px;">
+			<div class="feature-tabs" role="tablist" aria-label="Feature preview" style="display: flex; flex-direction: column; gap: 4px;">
 				{#each TABS as t (t.id)}
 					{@const active = t.id === tab}
 					<button
+						class="feature-tab"
 						role="tab"
 						onclick={() => (tab = t.id)}
 						aria-selected={active}
@@ -149,8 +149,8 @@
 		</div>
 	</section>
 
-	<section style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 32px; box-sizing: border-box;">
-		<div style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 20px 24px; background: hsl(var(--card)); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+	<section class="landing-section status-section" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 32px; box-sizing: border-box;">
+		<div class="status-panel" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 20px 24px; background: hsl(var(--card)); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
 			{#each status as it, i (i)}
 				<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 13px;">
 					<span style="
@@ -173,15 +173,15 @@
 		</div>
 	</section>
 
-	<section id="install" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 48px 32px 32px; box-sizing: border-box;">
-		<h2 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.02em;">{msgs.install_heading()}</h2>
+	<section class="landing-section install-section" id="install" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 48px 32px 32px; box-sizing: border-box;">
+		<h2 class="section-title" style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 0;">{msgs.install_heading()}</h2>
 		<p style="margin-top: 8px; color: hsl(var(--muted-foreground)); font-size: 15px; max-width: 600px;">
 			{msgs.install_intro()}
 		</p>
 
-		<div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+		<div class="install-grid" style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
 			{#each PLATFORMS as p (p.id)}
-				<div class="f-card" style="display: flex; align-items: center; gap: 14px; padding: 16px;">
+				<div class="f-card install-card" style="display: flex; align-items: center; gap: 14px; padding: 16px;">
 					<div style="width: 40px; height: 40px; border-radius: var(--radius); background: hsl(var(--accent)); display: inline-flex; align-items: center; justify-content: center; color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">
 						<PlatformGlyph icon={p.icon} size={18} />
 					</div>
@@ -213,13 +213,13 @@
 		</div>
 	</section>
 
-	<footer style="border-top: 1px solid hsl(var(--border)); margin-top: 32px; padding: 24px 32px;">
-		<div style="max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; font-size: 13px;">
+	<footer class="site-footer" style="border-top: 1px solid hsl(var(--border)); margin-top: 32px; padding: 24px 32px;">
+		<div class="footer-inner" style="max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; font-size: 13px;">
 			<div style="display: flex; align-items: center; gap: 8px;">
 				<img src="/pepo-flat.png" style="width: 18px; height: 18px;" alt="" />
 				<span style="color: hsl(var(--muted-foreground));">{msgs.foot_attribution()}</span>
 			</div>
-			<nav style="margin-left: auto; display: flex; gap: 18px;">
+			<nav class="footer-nav" style="margin-left: auto; display: flex; gap: 18px;">
 				<a class="link" href="https://github.com/synthlabs/pepo">{msgs.foot_github()}</a>
 				<a class="link" href="https://github.com/synthlabs/pepo/releases">{msgs.foot_releases()}</a>
 				<a class="link" href="https://github.com/synthlabs/pepo/issues">{msgs.foot_issues()}</a>

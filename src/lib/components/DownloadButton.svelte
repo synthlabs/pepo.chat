@@ -51,7 +51,7 @@
 	});
 </script>
 
-<div bind:this={wrap} style="position: relative; display: inline-block;">
+<div class="download-wrap" bind:this={wrap} style="position: relative; display: inline-block;">
 	<div class="btn-split">
 		<a class="primary" href={hrefFor(current, version)}>
 			<PlatformGlyph icon={current.icon} size={18} />

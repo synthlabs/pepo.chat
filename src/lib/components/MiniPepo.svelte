@@ -46,7 +46,7 @@
 	}
 </script>
 
-<div class="shell" style="width: 100%;">
+<div class="shell mini-pepo-shell" style="width: 100%;">
 	<div class="shell-bar">
 		<span class="shell-dot" style="background: #ff5f57;"></span>
 		<span class="shell-dot" style="background: #febc2e;"></span>
@@ -58,8 +58,9 @@
 		<div style="width: 40px;"></div>
 	</div>
 
-	<div style="display: grid; grid-template-columns: 220px 1fr; min-height: 380px;">
+	<div class="mini-pepo-grid" style="display: grid; grid-template-columns: 220px 1fr; min-height: 380px;">
 		<aside
+			class="mini-pepo-sidebar"
 			style="
 				background: hsl(var(--sidebar-background));
 				border-right: 1px solid hsl(var(--border));
