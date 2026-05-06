@@ -1,34 +1,69 @@
 <script lang="ts">
-	import { ShieldCheck, Code, Heart, Check, Download } from 'lucide-svelte';
+	import { Code, Download, Heart, MessageSquareText, ShieldCheck, SmilePlus, Users } from 'lucide-svelte';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
-	import MiniPepo from '$lib/components/MiniPepo.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import GithubGlyph from '$lib/glyphs/GithubGlyph.svelte';
 	import PlatformGlyph from '$lib/glyphs/PlatformGlyph.svelte';
 	import { PLATFORMS, RELEASES_URL } from '$lib/platform';
 	import { m as msgs } from '$lib/paraglide/messages';
 
-	type TabId = 'emotes' | 'following' | 'badges' | 'composer';
-	interface Tab { id: TabId; label: () => string; blurb: () => string }
+	type FeatureGroupId = 'chat' | 'emotes' | 'channels' | 'app';
+	interface FeatureStatus { done: boolean; label: () => string }
+	interface FeatureGroup {
+		id: FeatureGroupId;
+		label: () => string;
+		blurb: () => string;
+		items: FeatureStatus[];
+	}
 
-	const TABS: Tab[] = [
-		{ id: 'emotes',    label: msgs.tab_emotes_label,    blurb: msgs.tab_emotes_blurb },
-		{ id: 'following', label: msgs.tab_following_label, blurb: msgs.tab_following_blurb },
-		{ id: 'badges',    label: msgs.tab_badges_label,    blurb: msgs.tab_badges_blurb },
-		{ id: 'composer',  label: msgs.tab_composer_label,  blurb: msgs.tab_composer_blurb }
-	];
-
-	let tab: TabId = $state('emotes');
-
-	const status: { done: boolean; label: () => string }[] = [
-		{ done: true,  label: msgs.status_sending },
-		{ done: true,  label: msgs.status_badges },
-		{ done: true,  label: msgs.status_thirdparty },
-		{ done: true,  label: msgs.status_following },
-		{ done: true,  label: msgs.status_autoupdater },
-		{ done: false, label: msgs.status_history },
-		{ done: false, label: msgs.status_moderation },
-		{ done: false, label: msgs.status_youtube }
+	const FEATURES: FeatureGroup[] = [
+		{
+			id: 'chat',
+			label: msgs.feature_group_chat_label,
+			blurb: msgs.feature_group_chat_blurb,
+			items: [
+				{ done: true,  label: msgs.feature_chat_sending },
+				{ done: true,  label: msgs.feature_chat_parsing },
+				{ done: false, label: msgs.feature_chat_history },
+				{ done: false, label: msgs.feature_chat_moderation },
+				{ done: false, label: msgs.feature_chat_events },
+				{ done: false, label: msgs.feature_chat_decorations }
+			]
+		},
+		{
+			id: 'emotes',
+			label: msgs.feature_group_emotes_label,
+			blurb: msgs.feature_group_emotes_blurb,
+			items: [
+				{ done: true,  label: msgs.feature_emotes_thirdparty },
+				{ done: true,  label: msgs.feature_emotes_picker },
+				{ done: false, label: msgs.feature_identity_accounts }
+			]
+		},
+		{
+			id: 'channels',
+			label: msgs.feature_group_channels_label,
+			blurb: msgs.feature_group_channels_blurb,
+			items: [
+				{ done: true,  label: msgs.feature_channels_following },
+				{ done: true,  label: msgs.feature_channels_live_sorting },
+				{ done: false, label: msgs.feature_channels_live_notifications },
+				{ done: false, label: msgs.feature_channels_groups },
+				{ done: false, label: msgs.feature_channels_favorites }
+			]
+		},
+		{
+			id: 'app',
+			label: msgs.feature_group_app_label,
+			blurb: msgs.feature_group_app_blurb,
+			items: [
+				{ done: true,  label: msgs.feature_app_autoupdater },
+				{ done: false, label: msgs.feature_app_settings },
+				{ done: false, label: msgs.feature_app_theming },
+				{ done: false, label: msgs.feature_app_mentions },
+				{ done: false, label: msgs.feature_app_youtube }
+			]
+		}
 	];
 </script>
 
@@ -101,7 +136,7 @@
 					alt="pepo mascot"
 					class="duck-mark hero-mascot"
 				/>
-				<div class="shell hero-shell" style="border: none; box-shadow: var(--shadow-lg);">
+				<div class="shell hero-shell hero-visual" style="border: none; box-shadow: var(--shadow-lg);">
 					<img class="hero-demo" src="/pepo-chat-demo.gif" alt="Pepo chat demo" style="width: 100%; display: block;" />
 				</div>
 			</div>
@@ -109,66 +144,48 @@
 	</section>
 
 	<section class="landing-section features-section" id="features" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 48px 32px; box-sizing: border-box;">
-		<div class="section-head" style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+		<div class="section-head" style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
 			<h2 class="section-title" style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 0;">{msgs.features_heading()}</h2>
-			<span style="font-size: 13px; color: hsl(var(--muted-foreground));">{msgs.features_hint()}</span>
+			<p style="margin: 0; font-size: 13px; color: hsl(var(--muted-foreground)); line-height: 1.5; max-width: 420px; text-wrap: pretty;">
+				{msgs.features_intro()}
+			</p>
 		</div>
 
-		<div class="features-grid" style="display: grid; grid-template-columns: 360px 1fr; gap: 32px; align-items: start;">
-			<div class="feature-tabs" role="tablist" aria-label="Feature preview" style="display: flex; flex-direction: column; gap: 4px;">
-				{#each TABS as t (t.id)}
-					{@const active = t.id === tab}
-					<button
-						class="feature-tab"
-						role="tab"
-						onclick={() => (tab = t.id)}
-						aria-selected={active}
-						style="
-							text-align: left;
-							padding: 16px;
-							border: 1px solid {active ? 'hsl(var(--border))' : 'transparent'};
-							border-radius: var(--radius);
-							background: {active ? 'hsl(var(--card))' : 'transparent'};
-							cursor: pointer;
-							display: flex; gap: 12px;
-							transition: all 180ms;
-						"
-					>
-						<span style="margin-top: 4px; width: 6px; height: 6px; border-radius: 999px; flex-shrink: 0; background: {active ? 'hsl(var(--primary))' : 'hsl(var(--border))'};"></span>
-						<span style="display: flex; flex-direction: column; gap: 4px;">
-							<span style="font-size: 15px; font-weight: 500; color: hsl(var(--foreground));">{t.label()}</span>
-							<span style="font-size: 13px; color: hsl(var(--muted-foreground)); line-height: 1.5; text-wrap: pretty;">
-								{t.blurb()}
-							</span>
-						</span>
-					</button>
-				{/each}
-			</div>
-
-			<MiniPepo highlight={tab} />
-		</div>
-	</section>
-
-	<section class="landing-section status-section" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 32px; box-sizing: border-box;">
-		<div class="status-panel" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 20px 24px; background: hsl(var(--card)); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-			{#each status as it, i (i)}
-				<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 13px;">
-					<span style="
-						width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px;
-						border-radius: 4px;
-						background: {it.done ? 'hsl(263 75% 65% / 0.18)' : 'transparent'};
-						border: 1px solid {it.done ? 'hsl(263 75% 65% / 0.5)' : 'hsl(var(--border))'};
-						display: inline-flex; align-items: center; justify-content: center;
-						color: hsl(263 75% 75%);
-					">
-						{#if it.done}
-							<Check size={12} strokeWidth={1.75} />
-						{/if}
-					</span>
-					<span style="color: {it.done ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))'};">
-						{it.label()}
-					</span>
-				</div>
+		<div class="features-grid" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch;">
+			{#each FEATURES as feature (feature.id)}
+				<article class="f-card feature-card" style="display: flex; flex-direction: column; gap: 14px;">
+					<div class="feature-card-head">
+						<div class="feature-card-icon">
+							{#if feature.id === 'chat'}
+								<MessageSquareText size={18} strokeWidth={1.75} />
+							{:else if feature.id === 'emotes'}
+								<SmilePlus size={18} strokeWidth={1.75} />
+							{:else if feature.id === 'channels'}
+								<Users size={18} strokeWidth={1.75} />
+							{:else}
+								<Code size={18} strokeWidth={1.75} />
+							{/if}
+						</div>
+						<div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
+							<h3 style="margin: 0; font-size: 15px; font-weight: 500; color: hsl(var(--foreground)); letter-spacing: 0;">
+								{feature.label()}
+							</h3>
+							<p style="margin: 0; font-size: 13px; color: hsl(var(--muted-foreground)); line-height: 1.45; text-wrap: pretty;">
+								{feature.blurb()}
+							</p>
+						</div>
+					</div>
+					<div class="feature-status-list">
+						{#each feature.items as item (item.label)}
+							<div class="feature-status-item">
+								<span class:done={item.done} class="feature-status-badge">
+									{item.done ? msgs.feature_status_now() : msgs.feature_status_planned()}
+								</span>
+								<span class="feature-status-text">{item.label()}</span>
+							</div>
+						{/each}
+					</div>
+				</article>
 			{/each}
 		</div>
 	</section>
@@ -213,8 +230,8 @@
 		</div>
 	</section>
 
-	<footer class="site-footer" style="border-top: 1px solid hsl(var(--border)); margin-top: 32px; padding: 24px 32px;">
-		<div class="footer-inner" style="max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; font-size: 13px;">
+	<footer class="site-footer" style="margin-top: 32px; padding: 0 32px 24px;">
+		<div class="footer-inner" style="max-width: 1200px; margin: 0 auto; border-top: 1px solid hsl(var(--border)); padding-top: 24px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; font-size: 13px;">
 			<div style="display: flex; align-items: center; gap: 8px;">
 				<img src="/pepo-flat.png" style="width: 18px; height: 18px;" alt="" />
 				<span style="color: hsl(var(--muted-foreground));">{msgs.foot_attribution()}</span>
