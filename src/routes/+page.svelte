@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Code, Download, Heart, MessageSquareText, ShieldCheck, SmilePlus, Users } from 'lucide-svelte';
+	import { Activity, Code, Download, Heart, MessageSquareText, ShieldCheck, Users } from 'lucide-svelte';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import GithubGlyph from '$lib/glyphs/GithubGlyph.svelte';
@@ -7,7 +7,7 @@
 	import { PLATFORMS, RELEASES_URL } from '$lib/platform';
 	import { m as msgs } from '$lib/paraglide/messages';
 
-	type FeatureGroupId = 'chat' | 'emotes' | 'channels' | 'app';
+	type FeatureGroupId = 'chat' | 'events' | 'channels' | 'app';
 	interface FeatureStatus { done: boolean; label: () => string }
 	interface FeatureGroup {
 		id: FeatureGroupId;
@@ -24,20 +24,21 @@
 			items: [
 				{ done: true,  label: msgs.feature_chat_sending },
 				{ done: true,  label: msgs.feature_chat_parsing },
+				{ done: true,  label: msgs.feature_chat_composer },
 				{ done: false, label: msgs.feature_chat_history },
-				{ done: false, label: msgs.feature_chat_moderation },
-				{ done: false, label: msgs.feature_chat_events },
+				{ done: false, label: msgs.feature_chat_reply_threads },
 				{ done: false, label: msgs.feature_chat_decorations }
 			]
 		},
 		{
-			id: 'emotes',
-			label: msgs.feature_group_emotes_label,
-			blurb: msgs.feature_group_emotes_blurb,
+			id: 'events',
+			label: msgs.feature_group_events_label,
+			blurb: msgs.feature_group_events_blurb,
 			items: [
-				{ done: true,  label: msgs.feature_emotes_thirdparty },
-				{ done: true,  label: msgs.feature_emotes_picker },
-				{ done: false, label: msgs.feature_identity_accounts }
+				{ done: false, label: msgs.feature_events_activity },
+				{ done: false, label: msgs.feature_events_moderation },
+				{ done: false, label: msgs.feature_events_deleted_messages },
+				{ done: false, label: msgs.feature_events_support_activity }
 			]
 		},
 		{
@@ -58,8 +59,8 @@
 			blurb: msgs.feature_group_app_blurb,
 			items: [
 				{ done: true,  label: msgs.feature_app_autoupdater },
-				{ done: false, label: msgs.feature_app_settings },
-				{ done: false, label: msgs.feature_app_theming },
+				{ done: false, label: msgs.feature_app_accounts },
+				{ done: false, label: msgs.feature_app_appearance },
 				{ done: false, label: msgs.feature_app_mentions },
 				{ done: false, label: msgs.feature_app_youtube }
 			]
@@ -155,25 +156,25 @@
 			{#each FEATURES as feature (feature.id)}
 				<article class="f-card feature-card" style="display: flex; flex-direction: column; gap: 14px;">
 					<div class="feature-card-head">
-						<div class="feature-card-icon">
-							{#if feature.id === 'chat'}
-								<MessageSquareText size={18} strokeWidth={1.75} />
-							{:else if feature.id === 'emotes'}
-								<SmilePlus size={18} strokeWidth={1.75} />
-							{:else if feature.id === 'channels'}
-								<Users size={18} strokeWidth={1.75} />
-							{:else}
-								<Code size={18} strokeWidth={1.75} />
-							{/if}
-						</div>
-						<div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
-							<h3 style="margin: 0; font-size: 15px; font-weight: 500; color: hsl(var(--foreground)); letter-spacing: 0;">
+						<div class="feature-card-title-row">
+							<div class="feature-card-icon">
+								{#if feature.id === 'chat'}
+									<MessageSquareText size={18} strokeWidth={1.75} />
+								{:else if feature.id === 'events'}
+									<Activity size={18} strokeWidth={1.75} />
+								{:else if feature.id === 'channels'}
+									<Users size={18} strokeWidth={1.75} />
+								{:else}
+									<Code size={18} strokeWidth={1.75} />
+								{/if}
+							</div>
+							<h3 class="feature-card-title">
 								{feature.label()}
 							</h3>
-							<p style="margin: 0; font-size: 13px; color: hsl(var(--muted-foreground)); line-height: 1.45; text-wrap: pretty;">
-								{feature.blurb()}
-							</p>
 						</div>
+						<p class="feature-card-blurb">
+							{feature.blurb()}
+						</p>
 					</div>
 					<div class="feature-status-list">
 						{#each feature.items as item (item.label)}
