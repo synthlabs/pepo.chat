@@ -1,12 +1,31 @@
 <script lang="ts">
-	import { Activity, Check, Circle, Code, Download, Monitor, MessageSquareText, Smile, Users } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import { Activity, Check, Circle, Code, Download, Heart, Monitor, MessageSquareText, ShieldCheck, Smile, Users } from 'lucide-svelte';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import HeroChatMock from '$lib/components/HeroChatMock.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import GithubGlyph from '$lib/glyphs/GithubGlyph.svelte';
 	import PlatformGlyph from '$lib/glyphs/PlatformGlyph.svelte';
-	import { PLATFORMS, RELEASES_URL } from '$lib/platform';
+	import {
+		PLATFORMS,
+		RELEASES_URL,
+		fetchLatestReleaseAssets,
+		type ReleaseState
+	} from '$lib/platform';
 	import { m as msgs } from '$lib/paraglide/messages';
+
+	let releaseState: ReleaseState = $state({ status: 'loading' });
+
+	onMount(() => {
+		const controller = new AbortController();
+		void fetchLatestReleaseAssets(controller.signal)
+			.then((assets) => (releaseState = { status: 'ready', assets }))
+			.catch(() => {
+				if (!controller.signal.aborted) releaseState = { status: 'error' };
+			});
+
+		return () => controller.abort();
+	});
 
 	type FeatureGroupId = 'chat' | 'events' | 'channels' | 'app';
 	interface FeatureStatus { done: boolean; label: () => string }
@@ -120,12 +139,25 @@
 
 				<div class="hero-action-stack">
 					<div class="hero-actions">
-						<DownloadButton />
+						<DownloadButton {releaseState} />
 						<a class="btn-ghost hero-source" href="https://github.com/synthlabs/pepo" target="_blank" rel="noopener">
 							<GithubGlyph size={16} /> {msgs.view_source()}
 						</a>
 					</div>
-					<span class="hero-caption">{msgs.hero_status()}</span>
+					<div class="hero-assurances">
+						<span class="hero-assurance">
+							<ShieldCheck size={13} strokeWidth={1.5} aria-hidden="true" />
+							{msgs.hero_chip_updates()}
+						</span>
+						<span class="hero-assurance">
+							<Code size={13} strokeWidth={1.5} aria-hidden="true" />
+							{msgs.hero_chip_stack()}
+						</span>
+						<span class="hero-assurance">
+							<Heart size={13} strokeWidth={1.5} aria-hidden="true" />
+							{msgs.hero_chip_unaffiliated()}
+						</span>
+					</div>
 				</div>
 			</div>
 
@@ -209,6 +241,7 @@
 
 				<div class="install-grid">
 					{#each PLATFORMS as p (p.id)}
+						{@const asset = releaseState.status === 'ready' ? releaseState.assets[p.id] : undefined}
 						<div class="f-card install-card">
 							<div class="install-card-icon">
 								<PlatformGlyph icon={p.icon} size={18} />
@@ -216,10 +249,14 @@
 							<div class="install-card-copy">
 								<span class="install-card-title">{p.label}</span>
 								<span class="install-card-file">
-									{p.file.replace('{v}', '0.2.19')}
+									{#if releaseState.status === 'loading'}
+										<span class="release-name-skeleton" aria-hidden="true"></span>
+									{:else}
+										{asset?.name ?? `${msgs.dl_latest_release()} · ${p.ext}`}
+									{/if}
 								</span>
 							</div>
-							<a class="btn-ghost install-release" href={RELEASES_URL} aria-label={msgs.install_release_aria()}>
+							<a class="btn-ghost install-release" href={asset?.url ?? RELEASES_URL} aria-label={msgs.install_release_aria()}>
 								<Download size={14} strokeWidth={1.75} />
 							</a>
 						</div>

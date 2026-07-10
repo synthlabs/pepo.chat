@@ -190,9 +190,26 @@ a.link:hover {
   gap: 10px;
 }
 
-.hero-caption {
+.hero-assurances {
+  align-items: center;
   color: hsl(var(--muted-foreground));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.hero-assurance {
+  align-items: center;
+  display: inline-flex;
   font-size: 12px;
+  gap: 6px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.hero-assurance svg {
+  flex: 0 0 auto;
 }
 
 .landing-section {
@@ -440,6 +457,12 @@ a.link:hover {
   white-space: nowrap;
 }
 
+.install-card-file .release-name-skeleton {
+  height: 9px;
+  max-width: 100%;
+  width: 160px;
+}
+
 .install-release {
   padding: 6px 10px;
 }
@@ -553,6 +576,35 @@ a.link:hover {
 .btn-split > .primary:hover {
   background: hsl(263.4 70% 45%);
   text-decoration: none;
+}
+
+.download-label {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.download-file {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  max-width: 220px;
+  opacity: 0.75;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.release-name-skeleton {
+  background: currentColor;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  height: 8px;
+  opacity: 0.3;
+  vertical-align: -1px;
+  width: 132px;
 }
 
 .btn-split > .caret {
@@ -755,6 +807,13 @@ a.link:hover {
   .hero-actions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .hero-assurances {
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 8px;
   }
 
   .download-wrap {

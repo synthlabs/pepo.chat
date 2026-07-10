@@ -16,6 +16,18 @@ export interface Platform {
 	icon: PlatformIcon;
 }
 
+export interface ReleaseAsset {
+	name: string;
+	url: string;
+}
+
+export type ReleaseAssetMap = Partial<Record<PlatformId, ReleaseAsset>>;
+
+export type ReleaseState =
+	| { status: 'loading' }
+	| { status: 'ready'; assets: ReleaseAssetMap }
+	| { status: 'error' };
+
 export const PLATFORMS: Platform[] = [
 	{ id: 'macos',     label: 'macOS',                  short: 'macOS',   file: 'Pepo_{v}_universal.dmg',    ext: '.dmg',      icon: 'apple' },
 	{ id: 'windows',   label: 'Windows',                short: 'Windows', file: 'Pepo_{v}_x64-setup.exe',    ext: '.exe',      icon: 'windows' },
@@ -26,6 +38,46 @@ export const PLATFORMS: Platform[] = [
 
 export const RELEASES_URL = 'https://github.com/synthlabs/pepo/releases/latest';
 export const RELEASES_API = 'https://api.github.com/repos/synthlabs/pepo/releases/latest';
+
+function escapeRegExp(value: string): string {
+	return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function matcherFor(template: string): RegExp {
+	const [prefix, suffix] = template.split('{v}');
+	return new RegExp(`^${escapeRegExp(prefix)}.+${escapeRegExp(suffix)}$`);
+}
+
+export function resolveReleaseAssets(payload: unknown): ReleaseAssetMap {
+	if (!payload || typeof payload !== 'object' || !Array.isArray((payload as { assets?: unknown }).assets)) {
+		throw new Error('GitHub release payload is missing assets');
+	}
+
+	const githubAssets = (payload as { assets: unknown[] }).assets.flatMap((asset) => {
+		if (!asset || typeof asset !== 'object') return [];
+		const { name, browser_download_url: url } = asset as {
+			name?: unknown;
+			browser_download_url?: unknown;
+		};
+		return typeof name === 'string' && typeof url === 'string' ? [{ name, url }] : [];
+	});
+
+	return Object.fromEntries(
+		PLATFORMS.flatMap((platform) => {
+			const asset = githubAssets.find(({ name }) => matcherFor(platform.file).test(name));
+			return asset ? [[platform.id, asset]] : [];
+		})
+	) as ReleaseAssetMap;
+}
+
+export async function fetchLatestReleaseAssets(signal?: AbortSignal): Promise<ReleaseAssetMap> {
+	const response = await fetch(RELEASES_API, {
+		headers: { Accept: 'application/vnd.github+json' },
+		signal
+	});
+	if (!response.ok) throw new Error(`GitHub releases request failed with ${response.status}`);
+	return resolveReleaseAssets(await response.json());
+}
 
 export function detectPlatform(): PlatformId {
 	if (typeof navigator === 'undefined') return 'macos';
@@ -38,13 +90,4 @@ export function detectPlatform(): PlatformId {
 		return 'linux-deb';
 	}
 	return 'macos';
-}
-
-export function releaseAssetUrl(version: string, filename: string): string {
-	return `https://github.com/synthlabs/pepo/releases/download/v${version}/${filename}`;
-}
-
-export function hrefFor(p: Platform, version: string | null): string {
-	if (!version) return RELEASES_URL;
-	return releaseAssetUrl(version, p.file.replace('{v}', version));
 }
