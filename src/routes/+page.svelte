@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Activity, Code, Download, Monitor, MessageSquareText, Smile, Users } from 'lucide-svelte';
+	import { Activity, Check, Circle, Code, Download, Monitor, MessageSquareText, Smile, Users } from 'lucide-svelte';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import HeroChatMock from '$lib/components/HeroChatMock.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
@@ -23,11 +23,11 @@
 			label: msgs.feature_group_chat_label,
 			blurb: msgs.feature_group_chat_blurb,
 			items: [
-				{ done: true,  label: msgs.feature_chat_sending },
 				{ done: true,  label: msgs.feature_chat_parsing },
 				{ done: true,  label: msgs.feature_chat_composer },
-				{ done: false, label: msgs.feature_chat_history },
+				{ done: true,  label: msgs.feature_chat_sending },
 				{ done: false, label: msgs.feature_chat_reply_threads },
+				{ done: false, label: msgs.feature_chat_history },
 				{ done: false, label: msgs.feature_chat_decorations }
 			]
 		},
@@ -49,9 +49,9 @@
 			items: [
 				{ done: true,  label: msgs.feature_channels_following },
 				{ done: true,  label: msgs.feature_channels_live_sorting },
+				{ done: false, label: msgs.feature_channels_favorites },
 				{ done: false, label: msgs.feature_channels_live_notifications },
-				{ done: false, label: msgs.feature_channels_groups },
-				{ done: false, label: msgs.feature_channels_favorites }
+				{ done: false, label: msgs.feature_channels_groups }
 			]
 		},
 		{
@@ -60,9 +60,9 @@
 			blurb: msgs.feature_group_app_blurb,
 			items: [
 				{ done: true,  label: msgs.feature_app_autoupdater },
-				{ done: false, label: msgs.feature_app_accounts },
 				{ done: false, label: msgs.feature_app_appearance },
 				{ done: false, label: msgs.feature_app_mentions },
+				{ done: false, label: msgs.feature_app_accounts },
 				{ done: false, label: msgs.feature_app_youtube }
 			]
 		}
@@ -142,18 +142,20 @@
 
 			<div class="features-grid">
 				{#each FEATURES as feature (feature.id)}
-					<article class="f-card feature-card">
+					{@const currentItems = feature.items.filter((item) => item.done)}
+					{@const plannedItems = feature.items.filter((item) => !item.done)}
+					<article class="feature-card">
 						<div class="feature-card-head">
 							<div class="feature-card-title-row">
 								<div class="feature-card-icon">
 									{#if feature.id === 'chat'}
-										<MessageSquareText size={20} strokeWidth={1.5} />
+										<MessageSquareText size={20} strokeWidth={1.5} aria-hidden="true" />
 									{:else if feature.id === 'events'}
-										<Activity size={20} strokeWidth={1.5} />
+										<Activity size={20} strokeWidth={1.5} aria-hidden="true" />
 									{:else if feature.id === 'channels'}
-										<Users size={20} strokeWidth={1.5} />
+										<Users size={20} strokeWidth={1.5} aria-hidden="true" />
 									{:else}
-										<Code size={20} strokeWidth={1.5} />
+										<Code size={20} strokeWidth={1.5} aria-hidden="true" />
 									{/if}
 								</div>
 								<h3 class="feature-card-title">
@@ -164,15 +166,34 @@
 								{feature.blurb()}
 							</p>
 						</div>
-						<div class="feature-status-list">
-							{#each feature.items as item (item.label)}
-								<div class="feature-status-item">
-									<span class:done={item.done} class="feature-status-badge">
-										{item.done ? msgs.feature_status_now() : msgs.feature_status_planned()}
-									</span>
-									<span class="feature-status-text">{item.label()}</span>
+						<div class="feature-status-groups">
+							{#if currentItems.length > 0}
+								<div class="feature-status-group">
+									<h4 class="feature-status-heading">{msgs.feature_status_now()}</h4>
+									<ul class="feature-status-list">
+										{#each currentItems as item (item.label)}
+											<li class="feature-status-item current">
+												<Check class="feature-status-icon" size={14} strokeWidth={2} aria-hidden="true" />
+												<span class="feature-status-text">{item.label()}</span>
+											</li>
+										{/each}
+									</ul>
 								</div>
-							{/each}
+							{/if}
+
+							{#if plannedItems.length > 0}
+								<div class="feature-status-group planned">
+									<h4 class="feature-status-heading">{msgs.feature_status_planned()}</h4>
+									<ul class="feature-status-list">
+										{#each plannedItems as item (item.label)}
+											<li class="feature-status-item planned">
+												<Circle class="feature-status-icon" size={8} strokeWidth={1.75} aria-hidden="true" />
+												<span class="feature-status-text">{item.label()}</span>
+											</li>
+										{/each}
+									</ul>
+								</div>
+							{/if}
 						</div>
 					</article>
 				{/each}
