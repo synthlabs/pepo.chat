@@ -2,7 +2,16 @@
 	import { onMount } from 'svelte';
 	import { m as msgs } from '$lib/paraglide/messages';
 
-	type Badge = 'broadcaster' | 'mod' | 'sub' | 'vip';
+	const BADGE_IMAGES = {
+		broadcaster: '/badges/hero-chat/broadcaster.png',
+		mod: '/badges/hero-chat/moderator.png',
+		vip: '/badges/hero-chat/vip.png',
+		'subscriber-1': '/badges/hero-chat/subscriber-1.png',
+		'subscriber-2': '/badges/hero-chat/subscriber-2.png',
+		'subscriber-3': '/badges/hero-chat/subscriber-3.png'
+	} as const;
+
+	type Badge = keyof typeof BADGE_IMAGES;
 
 	interface ChatSource {
 		user: string;
@@ -51,29 +60,22 @@
 
 	const POOL: ChatSource[] = [
 		{ user: 'viewerdude',     color: '#ff7f50', badges: [],                 text: msgs.mock_chat_01 },
-		{ user: 'gamer_kim',      color: '#1e90ff', badges: ['sub'],            text: msgs.mock_chat_02 },
+		{ user: 'gamer_kim',      color: '#1e90ff', badges: ['subscriber-1'],   text: msgs.mock_chat_02 },
 		{ user: 'mod_wren',       color: '#00ad03', badges: ['mod'],            text: msgs.mock_chat_03 },
-		{ user: 'kappa_kate',     color: '#8a2be2', badges: ['sub', 'vip'],     text: msgs.mock_chat_04 },
+		{ user: 'kappa_kate',     color: '#8a2be2', badges: ['subscriber-2', 'vip'], text: msgs.mock_chat_04 },
 		{ user: 'casualviewer',   color: '#ff69b4', badges: [],                 text: msgs.mock_chat_05 },
 		{ user: 'laurendev',      color: '#e91916', badges: ['broadcaster'],    text: msgs.mock_chat_06 },
-		{ user: 'subscriber99',   color: '#ffaa00', badges: ['sub'],            text: msgs.mock_chat_07 },
+		{ user: 'subscriber99',   color: '#ffaa00', badges: ['subscriber-3'],   text: msgs.mock_chat_07 },
 		{ user: 'newguy',         color: '#00bcd4', badges: [],                 text: msgs.mock_chat_08 },
-		{ user: 'oldtimer',       color: '#9c27b0', badges: ['sub'],            text: msgs.mock_chat_09 },
+		{ user: 'oldtimer',       color: '#9c27b0', badges: ['subscriber-1'],   text: msgs.mock_chat_09 },
 		{ user: 'sadlad',         color: '#6495ed', badges: [],                 text: msgs.mock_chat_10 },
-		{ user: 'emote_enjoyer',  color: '#00a86b', badges: ['sub'],            text: msgs.mock_chat_11 },
+		{ user: 'emote_enjoyer',  color: '#00a86b', badges: ['subscriber-2'],   text: msgs.mock_chat_11 },
 		{ user: 'lurker_5000',    color: '#ff7f50', badges: [],                 text: msgs.mock_chat_12 },
-		{ user: 'vibecat',        color: '#ff69b4', badges: ['sub'],            text: msgs.mock_chat_13 },
+		{ user: 'vibecat',        color: '#ff69b4', badges: ['subscriber-3'],   text: msgs.mock_chat_13 },
 		{ user: 'chatterino_fan', color: '#1e90ff', badges: [],                 text: msgs.mock_chat_14 },
 		{ user: 'doomer_dan',     color: '#9c27b0', badges: [],                 text: msgs.mock_chat_15 },
 		{ user: 'glhf_gg',        color: '#ffaa00', badges: ['vip'],            text: msgs.mock_chat_16 }
 	];
-
-	const BADGE_COLORS: Record<Badge, string> = {
-		broadcaster: '#e91916',
-		mod: '#00ad03',
-		sub: 'hsl(263.4 70% 50.4%)',
-		vip: '#e005b9'
-	};
 
 	let messages = $state<ChatMessage[]>([]);
 	let floaters = $state<Floater[]>([]);
@@ -183,7 +185,7 @@
 			<div class="chat-row" class:alt={message.id % 2 === 1}>
 				<span class="chat-time">{message.ts}</span>
 				{#each message.badges as badge (badge)}
-					<span class="chat-badge" style={`background: ${BADGE_COLORS[badge]};`}></span>
+					<img class="chat-badge" src={BADGE_IMAGES[badge]} alt="" width="18" height="18" />
 				{/each}
 				<span class="chat-user" style={`color: ${message.color};`}>{message.user}</span>
 				<span class="chat-sep">: </span>
@@ -265,12 +267,12 @@
 	}
 
 	.chat-badge {
-		border-radius: 2px;
 		display: inline-block;
-		height: 14px;
+		height: 18px;
 		margin-right: 4px;
-		vertical-align: -2px;
-		width: 14px;
+		object-fit: contain;
+		vertical-align: -4px;
+		width: 18px;
 	}
 
 	.chat-user {
