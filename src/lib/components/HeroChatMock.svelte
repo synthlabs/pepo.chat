@@ -53,7 +53,17 @@
 		POGGERS: 'https://cdn.betterttv.net/emote/58ae8407ff7b7276f8e594f2/2x',
 		OMEGALUL: 'https://cdn.betterttv.net/emote/583089f4737a8e61abb0186b/2x',
 		PepeLaugh: 'https://cdn.betterttv.net/emote/5c548025009a2e73916b3a37/2x',
-		Sadge: 'https://cdn.betterttv.net/emote/5fa8f232eca18f6455c2b2e1/2x'
+		Sadge: 'https://cdn.betterttv.net/emote/5e0fa9d40550d42106b8a489/2x',
+		Pog: 'https://cdn.frankerfacez.com/emoticon/210748/2',
+		PepeHands: 'https://cdn.frankerfacez.com/emoticon/231552/2',
+		widepeepoHappy: 'https://cdn.frankerfacez.com/emoticon/270930/2',
+		LULW: 'https://cdn.frankerfacez.com/emoticon/139407/2',
+		Pepega: 'https://cdn.frankerfacez.com/emoticon/243789/2',
+		GIGACHAD: 'https://cdn.7tv.app/emote/01F6MZGCNG000255K4X1K7NTHR/2x.webp',
+		NOOOO: 'https://cdn.7tv.app/emote/01F6MKTFTG0009C9ZSNZTFV2ZF/2x.webp',
+		COPIUM: 'https://cdn.7tv.app/emote/01F6ME7ADR0000WDA7ERT9H30R/2x.webp',
+		Prayge: 'https://cdn.7tv.app/emote/01F6NACCD80006SZ7ZW5FMWKWK/2x.webp',
+		NODDERS: 'https://cdn.7tv.app/emote/01F6MDFCSR0000WDA7ERT623YT/2x.webp'
 	} as const;
 
 	type EmoteName = keyof typeof EMOTES;
@@ -74,7 +84,15 @@
 		{ user: 'vibecat',        color: '#ff69b4', badges: ['subscriber-3'],   text: msgs.mock_chat_13 },
 		{ user: 'chatterino_fan', color: '#1e90ff', badges: [],                 text: msgs.mock_chat_14 },
 		{ user: 'doomer_dan',     color: '#9c27b0', badges: [],                 text: msgs.mock_chat_15 },
-		{ user: 'glhf_gg',        color: '#ffaa00', badges: ['vip'],            text: msgs.mock_chat_16 }
+		{ user: 'glhf_gg',        color: '#ffaa00', badges: ['vip'],            text: msgs.mock_chat_16 },
+		{ user: 'clip_farmer',    color: '#00bcd4', badges: [],                 text: msgs.mock_chat_17 },
+		{ user: 'hands_down',     color: '#6495ed', badges: ['subscriber-1'],   text: msgs.mock_chat_18 },
+		{ user: 'happy_peepo',    color: '#00a86b', badges: ['vip'],            text: msgs.mock_chat_19 },
+		{ user: 'replay_andy',    color: '#ff7f50', badges: [],                 text: msgs.mock_chat_20 },
+		{ user: 'button_masher',  color: '#ffaa00', badges: [],                 text: msgs.mock_chat_21 },
+		{ user: 'macro_mike',     color: '#e91916', badges: ['subscriber-2'],   text: msgs.mock_chat_22 },
+		{ user: 'cope_tank',      color: '#9c27b0', badges: [],                 text: msgs.mock_chat_23 },
+		{ user: 'prayge_chat',    color: '#1e90ff', badges: ['subscriber-3'],   text: msgs.mock_chat_24 }
 	];
 
 	let messages = $state<ChatMessage[]>([]);
