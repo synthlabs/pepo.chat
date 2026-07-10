@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Activity, Code, Download, Heart, MessageSquareText, ShieldCheck, Users } from 'lucide-svelte';
+	import { Activity, Code, Download, Monitor, MessageSquareText, Smile, Users } from 'lucide-svelte';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
+	import HeroChatMock from '$lib/components/HeroChatMock.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import GithubGlyph from '$lib/glyphs/GithubGlyph.svelte';
 	import PlatformGlyph from '$lib/glyphs/PlatformGlyph.svelte';
@@ -76,173 +77,158 @@
 	<link rel="alternate" hreflang="x-default" href="https://pepo.chat/" />
 </svelte:head>
 
-<div class="landing-page" style="min-height: 100vh; display: flex; flex-direction: column;">
-	<header class="site-header" style="display: flex; align-items: center; padding: 18px 32px; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box;">
-		<div class="brand-lockup" style="display: flex; align-items: center; gap: 10px;">
-			<img class="brand-logo" src="/pepo-flat.png" alt="" style="height: 28px; width: 28px;" />
-			<span class="brand-name" style="font-size: 16px; font-weight: 600; letter-spacing: 0;">pepo</span>
-			<span class="brand-badge" style="font-size: 11px; padding: 2px 6px; margin-left: 4px; border-radius: 999px; background: hsl(var(--accent)); color: hsl(var(--muted-foreground)); border: 1px solid hsl(var(--border));">
-				{msgs.early_access()}
-			</span>
-		</div>
-		<nav class="site-nav" style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
-			<a class="btn-ghost nav-link" href="#features" style="padding: 6px 10px;">{msgs.nav_features()}</a>
-			<a class="btn-ghost nav-link" href="#install" style="padding: 6px 10px;">{msgs.nav_install()}</a>
-			<a class="btn-ghost nav-link" href="https://github.com/synthlabs/pepo" style="padding: 6px 10px;">
-				<GithubGlyph size={14} /> {msgs.nav_github()}
+<div class="landing-page">
+	<header class="site-header">
+		<a class="brand-lockup" href="/" aria-label="pepo">
+			<img class="brand-logo" src="/pepo-flat.png" alt="" />
+			<span class="brand-name">pepo</span>
+		</a>
+		<nav class="site-nav" aria-label="Primary">
+			<a class="site-nav-link" href="#features">{msgs.nav_features()}</a>
+			<a class="site-nav-link" href="#download">{msgs.nav_download()}</a>
+			<a class="site-nav-link" href="https://github.com/synthlabs/pepo" target="_blank" rel="noopener">
+				<GithubGlyph size={16} /> {msgs.nav_github()}
 			</a>
 			<LanguageSwitcher />
 		</nav>
 	</header>
 
-	<section class="landing-section hero-section" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 32px 32px 64px; box-sizing: border-box;">
-		<div class="hero-grid" style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center;">
+	<main>
+		<section class="hero-section" aria-labelledby="hero-title">
 			<div class="hero-copy">
-				<div class="hero-status" style="display: flex; align-items: center; gap: 8px; margin-bottom: 18px;">
-					<span class="live-dot" style="width: 8px; height: 8px; border-radius: 999px; background: hsl(var(--primary));"></span>
-					<span style="font-size: 12px; color: hsl(var(--muted-foreground)); letter-spacing: 0;">
-						{msgs.hero_status()}
-					</span>
-				</div>
-				<h1 class="hero-title" style="font-weight: 600; line-height: 1.04; letter-spacing: 0; margin: 0;">
-					{msgs.hero_headline_part1()}<br />{msgs.hero_headline_part2()}
+				<h1 class="hero-title" id="hero-title">
+					{msgs.hero_headline_part1()}{#if msgs.hero_headline_part2()}<br />{msgs.hero_headline_part2()}{/if}
 				</h1>
-				<p class="hero-subtitle" style="margin-top: 18px; font-size: 17px; line-height: 1.55; color: hsl(var(--muted-foreground)); max-width: 480px; text-wrap: pretty;">
+				<p class="hero-subtitle">
 					{msgs.hero_subtitle()}
 				</p>
 
-				<div class="hero-actions" style="display: flex; gap: 12px; align-items: center; margin-top: 28px; flex-wrap: wrap;">
-					<DownloadButton />
-					<a class="btn-ghost hero-source" href="https://github.com/synthlabs/pepo">
-						<GithubGlyph size={16} /> {msgs.view_source()}
-					</a>
+				<div class="hero-feature-list">
+					<div class="hero-feature-row">
+						<Smile class="hero-feature-icon" size={18} strokeWidth={1.5} />
+						<span>{msgs.hero_feature_emotes()}</span>
+					</div>
+					<div class="hero-feature-row">
+						<Monitor class="hero-feature-icon" size={18} strokeWidth={1.5} />
+						<span>{msgs.hero_feature_platforms()}</span>
+					</div>
+					<div class="hero-feature-row">
+						<Code class="hero-feature-icon" size={18} strokeWidth={1.5} />
+						<span>{msgs.hero_feature_open_source()}</span>
+					</div>
 				</div>
 
-				<div class="hero-chips" style="margin-top: 20px; font-size: 12px; color: hsl(var(--muted-foreground)); display: flex; gap: 16px; flex-wrap: wrap;">
-					<span class="hero-chip" style="display: inline-flex; align-items: center; gap: 6px;">
-						<ShieldCheck size={12} strokeWidth={1.75} /> {msgs.hero_chip_updates()}
-					</span>
-					<span class="hero-chip" style="display: inline-flex; align-items: center; gap: 6px;">
-						<Code size={12} strokeWidth={1.75} /> {msgs.hero_chip_stack()}
-					</span>
-					<span class="hero-chip" style="display: inline-flex; align-items: center; gap: 6px;">
-						<Heart size={12} strokeWidth={1.75} /> {msgs.hero_chip_unaffiliated()}
-					</span>
-				</div>
-			</div>
-
-			<div class="hero-preview" style="position: relative;">
-				<img
-					src="/pepo-logo.png"
-					alt="pepo mascot"
-					class="duck-mark hero-mascot"
-				/>
-				<div class="shell hero-shell hero-visual" style="border: none; box-shadow: var(--shadow-lg);">
-					<img class="hero-demo" src="/pepo-chat-demo.gif" alt="Pepo chat demo" style="width: 100%; display: block;" />
+				<div class="hero-action-stack">
+					<div class="hero-actions">
+						<DownloadButton />
+						<a class="btn-ghost hero-source" href="https://github.com/synthlabs/pepo" target="_blank" rel="noopener">
+							<GithubGlyph size={16} /> {msgs.view_source()}
+						</a>
+					</div>
+					<span class="hero-caption">{msgs.hero_status()}</span>
 				</div>
 			</div>
-		</div>
-	</section>
 
-	<section class="landing-section features-section" id="features" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 48px 32px; box-sizing: border-box;">
-		<div class="section-head" style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-			<h2 class="section-title" style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 0;">{msgs.features_heading()}</h2>
-			<p style="margin: 0; font-size: 13px; color: hsl(var(--muted-foreground)); line-height: 1.5; max-width: 420px; text-wrap: pretty;">
-				{msgs.features_intro()}
-			</p>
-		</div>
+			<HeroChatMock />
+		</section>
 
-		<div class="features-grid" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch;">
-			{#each FEATURES as feature (feature.id)}
-				<article class="f-card feature-card" style="display: flex; flex-direction: column; gap: 14px;">
-					<div class="feature-card-head">
-						<div class="feature-card-title-row">
-							<div class="feature-card-icon">
-								{#if feature.id === 'chat'}
-									<MessageSquareText size={18} strokeWidth={1.75} />
-								{:else if feature.id === 'events'}
-									<Activity size={18} strokeWidth={1.75} />
-								{:else if feature.id === 'channels'}
-									<Users size={18} strokeWidth={1.75} />
-								{:else}
-									<Code size={18} strokeWidth={1.75} />
-								{/if}
+		<section class="landing-section features-section" id="features">
+			<div class="section-head">
+				<h2 class="section-title">{msgs.features_heading()}</h2>
+				<p class="section-intro">
+					{msgs.features_intro()}
+				</p>
+			</div>
+
+			<div class="features-grid">
+				{#each FEATURES as feature (feature.id)}
+					<article class="f-card feature-card">
+						<div class="feature-card-head">
+							<div class="feature-card-title-row">
+								<div class="feature-card-icon">
+									{#if feature.id === 'chat'}
+										<MessageSquareText size={20} strokeWidth={1.5} />
+									{:else if feature.id === 'events'}
+										<Activity size={20} strokeWidth={1.5} />
+									{:else if feature.id === 'channels'}
+										<Users size={20} strokeWidth={1.5} />
+									{:else}
+										<Code size={20} strokeWidth={1.5} />
+									{/if}
+								</div>
+								<h3 class="feature-card-title">
+									{feature.label()}
+								</h3>
 							</div>
-							<h3 class="feature-card-title">
-								{feature.label()}
-							</h3>
+							<p class="feature-card-blurb">
+								{feature.blurb()}
+							</p>
 						</div>
-						<p class="feature-card-blurb">
-							{feature.blurb()}
-						</p>
-					</div>
-					<div class="feature-status-list">
-						{#each feature.items as item (item.label)}
-							<div class="feature-status-item">
-								<span class:done={item.done} class="feature-status-badge">
-									{item.done ? msgs.feature_status_now() : msgs.feature_status_planned()}
-								</span>
-								<span class="feature-status-text">{item.label()}</span>
+						<div class="feature-status-list">
+							{#each feature.items as item (item.label)}
+								<div class="feature-status-item">
+									<span class:done={item.done} class="feature-status-badge">
+										{item.done ? msgs.feature_status_now() : msgs.feature_status_planned()}
+									</span>
+									<span class="feature-status-text">{item.label()}</span>
+								</div>
+							{/each}
+						</div>
+					</article>
+				{/each}
+			</div>
+		</section>
+
+		<section class="landing-section install-section" id="download">
+			<div class="section-inner install-inner">
+				<h2 class="section-title">{msgs.install_heading()}</h2>
+				<p class="install-intro">
+					{msgs.install_intro()}
+				</p>
+
+				<div class="install-grid">
+					{#each PLATFORMS as p (p.id)}
+						<div class="f-card install-card">
+							<div class="install-card-icon">
+								<PlatformGlyph icon={p.icon} size={18} />
 							</div>
-						{/each}
-					</div>
-				</article>
-			{/each}
-		</div>
-	</section>
-
-	<section class="landing-section install-section" id="install" style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 48px 32px 32px; box-sizing: border-box;">
-		<h2 class="section-title" style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 0;">{msgs.install_heading()}</h2>
-		<p style="margin-top: 8px; color: hsl(var(--muted-foreground)); font-size: 15px; max-width: 600px;">
-			{msgs.install_intro()}
-		</p>
-
-		<div class="install-grid" style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
-			{#each PLATFORMS as p (p.id)}
-				<div class="f-card install-card" style="display: flex; align-items: center; gap: 14px; padding: 16px;">
-					<div style="width: 40px; height: 40px; border-radius: var(--radius); background: hsl(var(--accent)); display: inline-flex; align-items: center; justify-content: center; color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">
-						<PlatformGlyph icon={p.icon} size={18} />
-					</div>
-					<div style="display: flex; flex-direction: column; flex: 1; min-width: 0;">
-						<span style="font-size: 14px; font-weight: 500;">{p.label}</span>
-						<span style="font-size: 12px; color: hsl(var(--muted-foreground)); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-							{p.file.replace('{v}', '0.2.19')}
-						</span>
-					</div>
-					<a class="btn-ghost" href={RELEASES_URL} style="padding: 6px 10px;" aria-label={msgs.install_release_aria()}>
-						<Download size={14} strokeWidth={1.75} />
-					</a>
+							<div class="install-card-copy">
+								<span class="install-card-title">{p.label}</span>
+								<span class="install-card-file">
+									{p.file.replace('{v}', '0.2.19')}
+								</span>
+							</div>
+							<a class="btn-ghost install-release" href={RELEASES_URL} aria-label={msgs.install_release_aria()}>
+								<Download size={14} strokeWidth={1.75} />
+							</a>
+						</div>
+					{/each}
 				</div>
-			{/each}
-		</div>
 
-		<div style="margin-top: 32px;">
-			<h3 style="margin: 0; font-size: 16px; font-weight: 500; color: hsl(var(--foreground));">{msgs.build_heading()}</h3>
-			<p style="margin-top: 4px; color: hsl(var(--muted-foreground)); font-size: 13px;">
-				{msgs.build_intro()}
-			</p>
-			<div class="code-block" style="margin-top: 12px; max-width: 720px;">
-				<div><span class="c-prompt">$</span> git clone --recurse-submodules https://github.com/synthlabs/pepo.git</div>
-				<div><span class="c-prompt">$</span> cd pepo</div>
-				<div><span class="c-prompt">$</span> pnpm install</div>
-				<div><span class="c-prompt">$</span> pnpm tauri build</div>
-				<div style="margin-top: 8px;"><span class="c-comment"># {msgs.build_comment()}</span></div>
+				<div class="build-section">
+					<h3 class="build-title">{msgs.build_heading()}</h3>
+					<p class="build-intro">
+						{msgs.build_intro()}
+					</p>
+					<div class="code-block">
+						<div><span class="c-prompt">$</span> git clone --recurse-submodules https://github.com/synthlabs/pepo.git</div>
+						<div><span class="c-prompt">$</span> cd pepo</div>
+						<div><span class="c-prompt">$</span> pnpm install</div>
+						<div><span class="c-prompt">$</span> pnpm tauri build</div>
+						<div class="build-comment"><span class="c-comment"># {msgs.build_comment()}</span></div>
+					</div>
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</main>
 
-	<footer class="site-footer" style="margin-top: 32px; padding: 0 32px 24px;">
-		<div class="footer-inner" style="max-width: 1200px; margin: 0 auto; border-top: 1px solid hsl(var(--border)); padding-top: 24px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; font-size: 13px;">
-			<div style="display: flex; align-items: center; gap: 8px;">
-				<img src="/pepo-flat.png" style="width: 18px; height: 18px;" alt="" />
-				<span style="color: hsl(var(--muted-foreground));">{msgs.foot_attribution()}</span>
-			</div>
-			<nav class="footer-nav" style="margin-left: auto; display: flex; gap: 18px;">
-				<a class="link" href="https://github.com/synthlabs/pepo">{msgs.foot_github()}</a>
-				<a class="link" href="https://github.com/synthlabs/pepo/releases">{msgs.foot_releases()}</a>
-				<a class="link" href="https://github.com/synthlabs/pepo/issues">{msgs.foot_issues()}</a>
-				<a class="link" href="https://github.com/synthlabs">{msgs.foot_synthlabs()}</a>
-			</nav>
-		</div>
+	<footer class="site-footer">
+		<span>{msgs.foot_attribution()}</span>
+		<nav class="footer-nav" aria-label="Footer">
+			<a href="https://github.com/synthlabs/pepo" target="_blank" rel="noopener">{msgs.foot_github()}</a>
+			<a href="https://github.com/synthlabs/pepo/releases" target="_blank" rel="noopener">{msgs.foot_releases()}</a>
+			<a href="https://github.com/synthlabs/pepo/issues" target="_blank" rel="noopener">{msgs.foot_issues()}</a>
+			<a href="https://github.com/synthlabs" target="_blank" rel="noopener">{msgs.foot_synthlabs()}</a>
+		</nav>
 	</footer>
 </div>
