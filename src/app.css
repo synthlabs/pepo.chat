@@ -233,7 +233,8 @@ a.link:hover {
   margin-bottom: 40px;
 }
 
-.features-section .section-head {
+.features-section .section-head,
+.install-section .section-head {
   flex-direction: column;
   gap: 12px;
   justify-content: flex-start;
@@ -262,13 +263,6 @@ a.link:hover {
   display: grid;
   gap: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.f-card {
-  background: hsl(var(--content-primary));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  padding: 24px;
 }
 
 .feature-card {
@@ -405,53 +399,74 @@ a.link:hover {
 }
 
 .install-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  display: block;
 }
 
 .install-grid {
   display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.install-platform-group {
+  min-width: 0;
+  padding: 0 28px;
+}
+
+.install-platform-group:first-child {
+  padding-left: 0;
+}
+
+.install-platform-group:last-child {
+  padding-right: 0;
+}
+
+.install-platform-group + .install-platform-group {
+  border-left: 1px solid hsl(var(--border));
 }
 
 .install-card {
   align-items: center;
-  display: flex;
+  display: grid;
   gap: 14px;
-  padding: 16px;
+  grid-template-columns: 20px minmax(0, 1fr) 36px;
+  min-width: 0;
+}
+
+.install-card + .install-card {
+  border-top: 1px solid hsl(var(--border));
+  margin-top: 18px;
+  padding-top: 18px;
 }
 
 .install-card-icon {
   align-items: center;
-  background: hsl(var(--secondary));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  color: hsl(var(--foreground));
+  color: hsl(var(--c-pepo));
   display: inline-flex;
-  flex: 0 0 40px;
-  height: 40px;
+  height: 20px;
   justify-content: center;
-  width: 40px;
+  width: 20px;
 }
 
 .install-card-copy {
   display: flex;
-  flex: 1;
   flex-direction: column;
+  gap: 2px;
   min-width: 0;
 }
 
 .install-card-title {
-  font-size: 14px;
+  color: hsl(var(--foreground));
+  font-size: 16px;
   font-weight: 500;
+  line-height: 1.35;
 }
 
 .install-card-file {
   color: hsl(var(--muted-foreground));
   font-family: var(--font-mono);
   font-size: 12px;
+  line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -463,12 +478,17 @@ a.link:hover {
   width: 160px;
 }
 
-.install-release {
-  padding: 6px 10px;
+.btn-ghost.install-release {
+  height: 36px;
+  justify-content: center;
+  padding: 0;
+  width: 36px;
 }
 
 .build-section {
-  margin-top: 8px;
+  border-top: 1px solid hsl(var(--border));
+  margin-top: 40px;
+  padding-top: 40px;
 }
 
 .build-title {
@@ -497,7 +517,7 @@ a.link:hover {
   font-size: 13px;
   line-height: 1.5;
   margin-top: 12px;
-  max-width: 720px;
+  max-width: none;
   overflow-x: auto;
   padding: 12px 14px;
 }
@@ -789,6 +809,30 @@ a.link:hover {
   .feature-card:not(:first-child) {
     border-top: 1px solid hsl(var(--border));
   }
+
+  .install-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .install-platform-group,
+  .install-platform-group:first-child,
+  .install-platform-group:last-child {
+    border-left: 0;
+    padding: 24px 0;
+  }
+
+  .install-platform-group:first-child {
+    padding-top: 0;
+  }
+
+  .install-platform-group:last-child {
+    padding-bottom: 0;
+  }
+
+  .install-platform-group + .install-platform-group {
+    border-left: 0;
+    border-top: 1px solid hsl(var(--border));
+  }
 }
 
 @media (max-width: 560px) {
@@ -856,18 +900,6 @@ a.link:hover {
 
   .section-title {
     font-size: 24px;
-  }
-
-  .install-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .f-card {
-    padding: 20px;
-  }
-
-  .install-card {
-    padding: 14px;
   }
 
   .code-block {

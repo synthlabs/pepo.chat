@@ -86,6 +86,12 @@
 			]
 		}
 	];
+
+	const INSTALL_GROUPS = [
+		{ id: 'macos', platforms: PLATFORMS.filter((platform) => platform.id === 'macos') },
+		{ id: 'windows', platforms: PLATFORMS.filter((platform) => platform.id === 'windows') },
+		{ id: 'linux', platforms: PLATFORMS.filter((platform) => platform.icon === 'linux') }
+	];
 </script>
 
 <svelte:head>
@@ -234,31 +240,37 @@
 
 		<section class="landing-section install-section" id="download">
 			<div class="section-inner install-inner">
-				<h2 class="section-title">{msgs.install_heading()}</h2>
-				<p class="install-intro">
-					{msgs.install_intro()}
-				</p>
+				<div class="section-head">
+					<h2 class="section-title">{msgs.install_heading()}</h2>
+					<p class="install-intro">
+						{msgs.install_intro()}
+					</p>
+				</div>
 
 				<div class="install-grid">
-					{#each PLATFORMS as p (p.id)}
-						{@const asset = releaseState.status === 'ready' ? releaseState.assets[p.id] : undefined}
-						<div class="f-card install-card">
-							<div class="install-card-icon">
-								<PlatformGlyph icon={p.icon} size={18} />
-							</div>
-							<div class="install-card-copy">
-								<span class="install-card-title">{p.label}</span>
-								<span class="install-card-file">
-									{#if releaseState.status === 'loading'}
-										<span class="release-name-skeleton" aria-hidden="true"></span>
-									{:else}
-										{asset?.name ?? `${msgs.dl_latest_release()} · ${p.ext}`}
-									{/if}
-								</span>
-							</div>
-							<a class="btn-ghost install-release" href={asset?.url ?? RELEASES_URL} aria-label={msgs.install_release_aria()}>
-								<Download size={14} strokeWidth={1.75} />
-							</a>
+					{#each INSTALL_GROUPS as group (group.id)}
+						<div class="install-platform-group">
+							{#each group.platforms as p (p.id)}
+								{@const asset = releaseState.status === 'ready' ? releaseState.assets[p.id] : undefined}
+								<article class="install-card">
+									<div class="install-card-icon">
+										<PlatformGlyph icon={p.icon} size={18} />
+									</div>
+									<div class="install-card-copy">
+										<span class="install-card-title">{p.label}</span>
+										<span class="install-card-file">
+											{#if releaseState.status === 'loading'}
+												<span class="release-name-skeleton" aria-hidden="true"></span>
+											{:else}
+												{asset?.name ?? `${msgs.dl_latest_release()} · ${p.ext}`}
+											{/if}
+										</span>
+									</div>
+									<a class="btn-ghost install-release" href={asset?.url ?? RELEASES_URL} aria-label={msgs.install_release_aria()}>
+										<Download size={14} strokeWidth={1.75} />
+									</a>
+								</article>
+							{/each}
 						</div>
 					{/each}
 				</div>
