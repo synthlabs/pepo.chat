@@ -1,17 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Activity, Check, Circle, Code, Download, Heart, Monitor, MessageSquareText, ShieldCheck, Smile, Users } from 'lucide-svelte';
+	import { Code, Heart, Monitor, ShieldCheck, Smile } from 'lucide-svelte';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import HeroChatMock from '$lib/components/HeroChatMock.svelte';
+	import InstallPanel from '$lib/components/InstallPanel.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
+	import AppWindowDemo from '$lib/components/demo/AppWindowDemo.svelte';
 	import GithubGlyph from '$lib/glyphs/GithubGlyph.svelte';
-	import PlatformGlyph from '$lib/glyphs/PlatformGlyph.svelte';
-	import {
-		PLATFORMS,
-		RELEASES_URL,
-		fetchLatestReleaseAssets,
-		type ReleaseState
-	} from '$lib/platform';
+	import { fetchLatestReleaseAssets, type ReleaseState } from '$lib/platform';
 	import { m as msgs } from '$lib/paraglide/messages';
 
 	let releaseState: ReleaseState = $state({ status: 'loading' });
@@ -26,72 +22,6 @@
 
 		return () => controller.abort();
 	});
-
-	type FeatureGroupId = 'chat' | 'events' | 'channels' | 'app';
-	interface FeatureStatus { done: boolean; label: () => string }
-	interface FeatureGroup {
-		id: FeatureGroupId;
-		label: () => string;
-		blurb: () => string;
-		items: FeatureStatus[];
-	}
-
-	const FEATURES: FeatureGroup[] = [
-		{
-			id: 'chat',
-			label: msgs.feature_group_chat_label,
-			blurb: msgs.feature_group_chat_blurb,
-			items: [
-				{ done: true,  label: msgs.feature_chat_parsing },
-				{ done: true,  label: msgs.feature_chat_composer },
-				{ done: true,  label: msgs.feature_chat_sending },
-				{ done: false, label: msgs.feature_chat_reply_threads },
-				{ done: false, label: msgs.feature_chat_history },
-				{ done: false, label: msgs.feature_chat_decorations }
-			]
-		},
-		{
-			id: 'events',
-			label: msgs.feature_group_events_label,
-			blurb: msgs.feature_group_events_blurb,
-			items: [
-				{ done: false, label: msgs.feature_events_activity },
-				{ done: false, label: msgs.feature_events_moderation },
-				{ done: false, label: msgs.feature_events_deleted_messages },
-				{ done: false, label: msgs.feature_events_support_activity }
-			]
-		},
-		{
-			id: 'channels',
-			label: msgs.feature_group_channels_label,
-			blurb: msgs.feature_group_channels_blurb,
-			items: [
-				{ done: true,  label: msgs.feature_channels_following },
-				{ done: true,  label: msgs.feature_channels_live_sorting },
-				{ done: false, label: msgs.feature_channels_favorites },
-				{ done: false, label: msgs.feature_channels_live_notifications },
-				{ done: false, label: msgs.feature_channels_groups }
-			]
-		},
-		{
-			id: 'app',
-			label: msgs.feature_group_app_label,
-			blurb: msgs.feature_group_app_blurb,
-			items: [
-				{ done: true,  label: msgs.feature_app_autoupdater },
-				{ done: false, label: msgs.feature_app_appearance },
-				{ done: false, label: msgs.feature_app_mentions },
-				{ done: false, label: msgs.feature_app_accounts },
-				{ done: false, label: msgs.feature_app_youtube }
-			]
-		}
-	];
-
-	const INSTALL_GROUPS = [
-		{ id: 'macos', platforms: PLATFORMS.filter((platform) => platform.id === 'macos') },
-		{ id: 'windows', platforms: PLATFORMS.filter((platform) => platform.id === 'windows') },
-		{ id: 'linux', platforms: PLATFORMS.filter((platform) => platform.icon === 'linux') }
-	];
 </script>
 
 <svelte:head>
@@ -178,68 +108,13 @@
 				</p>
 			</div>
 
-			<div class="features-grid">
-				{#each FEATURES as feature (feature.id)}
-					{@const currentItems = feature.items.filter((item) => item.done)}
-					{@const plannedItems = feature.items.filter((item) => !item.done)}
-					<article class="feature-card">
-						<div class="feature-card-head">
-							<div class="feature-card-title-row">
-								<div class="feature-card-icon">
-									{#if feature.id === 'chat'}
-										<MessageSquareText size={20} strokeWidth={1.5} aria-hidden="true" />
-									{:else if feature.id === 'events'}
-										<Activity size={20} strokeWidth={1.5} aria-hidden="true" />
-									{:else if feature.id === 'channels'}
-										<Users size={20} strokeWidth={1.5} aria-hidden="true" />
-									{:else}
-										<Code size={20} strokeWidth={1.5} aria-hidden="true" />
-									{/if}
-								</div>
-								<h3 class="feature-card-title">
-									{feature.label()}
-								</h3>
-							</div>
-							<p class="feature-card-blurb">
-								{feature.blurb()}
-							</p>
-						</div>
-						<div class="feature-status-groups">
-							{#if currentItems.length > 0}
-								<div class="feature-status-group">
-									<h4 class="feature-status-heading">{msgs.feature_status_now()}</h4>
-									<ul class="feature-status-list">
-										{#each currentItems as item (item.label)}
-											<li class="feature-status-item current">
-												<Check class="feature-status-icon" size={14} strokeWidth={2} aria-hidden="true" />
-												<span class="feature-status-text">{item.label()}</span>
-											</li>
-										{/each}
-									</ul>
-								</div>
-							{/if}
-
-							{#if plannedItems.length > 0}
-								<div class="feature-status-group planned">
-									<h4 class="feature-status-heading">{msgs.feature_status_planned()}</h4>
-									<ul class="feature-status-list">
-										{#each plannedItems as item (item.label)}
-											<li class="feature-status-item planned">
-												<Circle class="feature-status-icon" size={8} strokeWidth={1.75} aria-hidden="true" />
-												<span class="feature-status-text">{item.label()}</span>
-											</li>
-										{/each}
-									</ul>
-								</div>
-							{/if}
-						</div>
-					</article>
-				{/each}
+			<div class="demo-wrap">
+				<AppWindowDemo />
 			</div>
 		</section>
 
 		<section class="landing-section install-section" id="download">
-			<div class="section-inner install-inner">
+			<div class="section-inner">
 				<div class="section-head">
 					<h2 class="section-title">{msgs.install_heading()}</h2>
 					<p class="install-intro">
@@ -247,47 +122,7 @@
 					</p>
 				</div>
 
-				<div class="install-grid">
-					{#each INSTALL_GROUPS as group (group.id)}
-						<div class="install-platform-group">
-							{#each group.platforms as p (p.id)}
-								{@const asset = releaseState.status === 'ready' ? releaseState.assets[p.id] : undefined}
-								<article class="install-card">
-									<div class="install-card-icon">
-										<PlatformGlyph icon={p.icon} size={18} />
-									</div>
-									<div class="install-card-copy">
-										<span class="install-card-title">{p.label}</span>
-										<span class="install-card-file">
-											{#if releaseState.status === 'loading'}
-												<span class="release-name-skeleton" aria-hidden="true"></span>
-											{:else}
-												{asset?.name ?? `${msgs.dl_latest_release()} · ${p.ext}`}
-											{/if}
-										</span>
-									</div>
-									<a class="btn-ghost install-release" href={asset?.url ?? RELEASES_URL} aria-label={msgs.install_release_aria()}>
-										<Download size={14} strokeWidth={1.75} />
-									</a>
-								</article>
-							{/each}
-						</div>
-					{/each}
-				</div>
-
-				<div class="build-section">
-					<h3 class="build-title">{msgs.build_heading()}</h3>
-					<p class="build-intro">
-						{msgs.build_intro()}
-					</p>
-					<div class="code-block">
-						<div><span class="c-prompt">$</span> git clone --recurse-submodules https://github.com/synthlabs/pepo.git</div>
-						<div><span class="c-prompt">$</span> cd pepo</div>
-						<div><span class="c-prompt">$</span> pnpm install</div>
-						<div><span class="c-prompt">$</span> pnpm tauri build</div>
-						<div class="build-comment"><span class="c-comment"># {msgs.build_comment()}</span></div>
-					</div>
-				</div>
+				<InstallPanel {releaseState} />
 			</div>
 		</section>
 	</main>
